@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File a Claim — Crop Insurance</title>
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+  </head>
+  <body>
+    <div class="app-layout">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-logo">🌽</div>
+          <div>
+            <div class="sidebar-title">LGU Sto. Niño</div>
+            <div class="sidebar-subtitle">Crop Insurance System</div>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <div class="nav-section-label">Main</div>
+          <div class="nav-item" onclick="navigateTo('dashboard.html')">
+            <span class="nav-icon">📊</span>Dashboard
+          </div>
+          <div class="nav-section-label">Applications</div>
+          <div class="nav-item" onclick="navigateTo('new-application.html')">
+            <span class="nav-icon">📝</span>New Application
+          </div>
+          <div class="nav-item" onclick="navigateTo('my-applications.html')">
+            <span class="nav-icon">📁</span>My Applications
+          </div>
+          <div class="nav-item" onclick="navigateTo('application-status.html')">
+            <span class="nav-icon">🔍</span>Application Status
+          </div>
+          <div class="nav-section-label">Claims</div>
+          <div class="nav-item active">
+            <span class="nav-icon">📩</span>File a Claim
+          </div>
+          <div class="nav-section-label">Account</div>
+          <div class="nav-item" onclick="navigateTo('profile.html')">
+            <span class="nav-icon">👤</span>My Profile
+          </div>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="user-info-sidebar" onclick="navigateTo('profile.html')">
+            <div class="user-avatar" id="sidebar-avatar">JD</div>
+            <div>
+              <div class="user-name-sidebar" id="sidebar-name">Loading...</div>
+              <div class="user-role-sidebar">Farmer</div>
+            </div>
+          </div>
+          <button
+            onclick="logout()"
+            style="
+              width: 100%;
+              margin-top: 8px;
+              background: rgba(255, 255, 255, 0.08);
+              border: 1px solid rgba(255, 255, 255, 0.12);
+              color: rgba(255, 255, 255, 0.7);
+              border-radius: 8px;
+              padding: 8px;
+              font-size: 13px;
+              cursor: pointer;
+              font-family: inherit;
+            "
+            onmouseover="this.style.background = 'rgba(220,53,69,0.2)'"
+            onmouseout="this.style.background = 'rgba(255,255,255,0.08)'"
+          >
+            🚪 Sign Out
+          </button>
+        </div>
+      </aside>
+
+      <header class="topbar">
+        <div class="topbar-left">
+          <div>
+            <div class="topbar-title">File a Claim</div>
+            <div class="topbar-subtitle">
+              Submit a new insurance claim for your damaged crops
+            </div>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              padding: 6px 14px;
+              background: #f8fafc;
+              border-radius: 30px;
+              border: 1px solid var(--border-color);
+              cursor: pointer;
+            "
+            onclick="navigateTo('profile.html')"
+          >
+            <div
+              class="user-avatar"
+              id="topbar-avatar"
+              style="width: 30px; height: 30px; font-size: 12px"
+            >
+              JD
+            </div>
+            <span
+              id="topbar-user-name"
+              style="font-size: 13px; font-weight: 600"
+              >Loading...</span
+            >
+          </div>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <div class="page-header">
+          <div class="page-header-left">
+            <div class="breadcrumb">
+              <span>Home</span><span class="sep">›</span
+              ><span class="current">File a Claim</span>
+            </div>
+            <h2>Insurance Claim Form</h2>
+            <p>Submit a claim for your approved applications</p>
+          </div>
+        </div>
+
+        <div class="grid-2" style="align-items: start">
+          <!-- Claim Form -->
+          <div class="card">
+            <div class="card-header"><h5>📩 Claim Details</h5></div>
+            <div class="card-body">
+              <div class="form-section-title">📋 Application Reference</div>
+              <div class="form-group">
+                <label class="form-label">Select Application *</label>
+                <select
+                  id="claim-app-id"
+                  class="form-select"
+                  onchange="populateFromApp()"
+                >
+                  <option value="">Select application ID</option>
+                </select>
+              </div>
+              <div
+                id="app-info-box"
+                style="
+                  display: none;
+                  background: #e8f5e9;
+                  border-radius: 8px;
+                  padding: 14px;
+                  margin-bottom: 16px;
+                  border: 1px solid #a5d6a7;
+                  font-size: 13px;
+                "
+              >
+                <div id="app-info-content"></div>
+              </div>
+
+              <div class="form-section-title">⚠️ Damage Information</div>
+              <div class="form-row form-row-2">
+                <div class="form-group">
+                  <label class="form-label">Date of Claim *</label>
+                  <input type="date" id="claim-date" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Date of Loss *</label>
+                  <input
+                    type="date"
+                    id="claim-loss-date"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="form-row form-row-2">
+                <div class="form-group">
+                  <label class="form-label">Cause of Damage *</label>
+                  <select id="claim-cause" class="form-select">
+                    <option value="">Select cause</option>
+                    <option>Flood</option>
+                    <option>Drought</option>
+                    <option>Typhoon</option>
+                    <option>Pest/Disease</option>
+                    <option>Fire</option>
+                    <option>Others</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Damage Percentage (%) *</label>
+                  <input
+                    type="number"
+                    id="claim-percent"
+                    class="form-control"
+                    placeholder="e.g. 75"
+                    min="1"
+                    max="100"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Description of Damage *</label>
+                <textarea
+                  id="claim-description"
+                  class="form-control"
+                  rows="4"
+                  placeholder="Describe in detail the extent and nature of the damage..."
+                ></textarea>
+              </div>
+
+              <div class="form-section-title">📸 Photo Evidence</div>
+              <div class="file-upload-area" id="photo-drop">
+                <input
+                  type="file"
+                  id="claim-photo"
+                  accept="image/*"
+                  onchange="previewClaimPhoto(this)"
+                />
+                <div class="file-upload-icon">📸</div>
+                <p class="file-upload-text">
+                  <span>Click to upload</span> damage photos
+                </p>
+                <p class="file-upload-text">PNG, JPG, JPEG up to 10MB</p>
+              </div>
+              <div
+                id="claim-photo-preview"
+                style="display: none; margin-top: 10px"
+              >
+                <img
+                  id="claim-preview-img"
+                  style="
+                    max-width: 100%;
+                    max-height: 150px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border-color);
+                  "
+                />
+                <p
+                  style="
+                    font-size: 12px;
+                    color: var(--success);
+                    margin-top: 6px;
+                  "
+                >
+                  ✅ Photo uploaded successfully
+                </p>
+              </div>
+
+              <div
+                style="
+                  display: flex;
+                  gap: 10px;
+                  margin-top: 20px;
+                  flex-wrap: wrap;
+                "
+              >
+                <button
+                  class="btn btn-primary btn-lg"
+                  onclick="submitClaim()"
+                  style="flex: 1"
+                >
+                  📤 Submit Claim
+                </button>
+                <button class="btn btn-ghost" onclick="clearClaimForm()">
+                  🗑️ Clear
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- My Claims -->
+          <div class="card">
+            <div class="card-header"><h5>📋 My Claims</h5></div>
+            <div id="my-claims-list" style="padding: 0"></div>
+            <div id="empty-claims" class="empty-state" style="padding: 30px">
+              <div class="empty-icon">📩</div>
+              <h4>No Claims Yet</h4>
+              <p>Submit your first claim to get started.</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="claim-success-modal">
+      <div class="modal" style="max-width: 420px; text-align: center">
+        <div class="modal-body" style="padding: 40px">
+          <div style="font-size: 64px; margin-bottom: 16px">📩</div>
+          <h3 style="color: var(--primary); margin-bottom: 10px">
+            Claim Submitted!
+          </h3>
+          <p
+            id="claim-success-id"
+            style="
+              font-size: 18px;
+              font-weight: 800;
+              color: var(--text-primary);
+              margin: 12px 0;
+            "
+          ></p>
+          <p
+            style="
+              font-size: 13.5px;
+              color: var(--text-muted);
+              margin-bottom: 20px;
+            "
+          >
+            Your claim has been filed and is under review. You will be notified
+            once a decision is made.
+          </p>
+          <div
+            style="
+              background: #e8f5e9;
+              border-radius: 8px;
+              padding: 12px;
+              font-size: 13px;
+              color: var(--primary);
+              margin-bottom: 20px;
+            "
+          >
+            ⏳ Status: <strong>Pending Review</strong>
+          </div>
+          <button
+            class="btn btn-primary w-100"
+            onclick="
+              closeModal('claim-success-modal');
+              loadClaims();
+            "
+          >
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../data/mockData.js"></script>
+    <script src="../../assets/js/app.js"></script>
+    <script>
+      const user = requireAuth();
+      document.getElementById("sidebar-name").textContent =
+        `${user.firstName} ${user.lastName}`;
+      document.getElementById("sidebar-avatar").textContent =
+        user.firstName[0] + user.lastName[0];
+      document.getElementById("topbar-user-name").textContent =
+        `${user.firstName} ${user.lastName}`;
+      document.getElementById("topbar-avatar").textContent =
+        user.firstName[0] + user.lastName[0];
+
+      document.getElementById("claim-date").value = new Date()
+        .toISOString()
+        .split("T")[0];
+
+      // Load approved applications for selector
+      function loadAppSelector() {
+        const apps = getApplications().filter(
+          (a) => a.userId === user.id && a.status === "Approved",
+        );
+        const sel = document.getElementById("claim-app-id");
+        if (apps.length === 0) {
+          sel.innerHTML = '<option value="">No approved applications</option>';
+        } else {
+          sel.innerHTML =
+            '<option value="">Select application ID</option>' +
+            apps
+              .map(
+                (a) =>
+                  `<option value="${a.id}">${a.id} — ${a.cornType}</option>`,
+              )
+              .join("");
+        }
+      }
+
+      function populateFromApp() {
+        const id = document.getElementById("claim-app-id").value;
+        const apps = getApplications();
+        const app = apps.find((a) => a.id === id);
+        const box = document.getElementById("app-info-box");
+        if (app) {
+          document.getElementById("claim-loss-date").value = app.dateOfLoss;
+          document.getElementById("claim-cause").value = app.causeOfDamage;
+          document.getElementById("claim-percent").value = app.percentDamage;
+          document.getElementById("app-info-content").innerHTML = `
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div><span style="color:var(--text-muted);font-size:11px">FARMER</span><div style="font-weight:600">${app.farmerName}</div></div>
+              <div><span style="color:var(--text-muted);font-size:11px">LOCATION</span><div style="font-weight:600">${app.farmLocation}</div></div>
+              <div><span style="color:var(--text-muted);font-size:11px">COVERAGE</span><div style="font-weight:600">${formatCurrency(app.desiredCoverage)}</div></div>
+              <div><span style="color:var(--text-muted);font-size:11px">CORN TYPE</span><div style="font-weight:600">${app.cornType}</div></div>
+            </div>
+          `;
+          box.style.display = "block";
+        } else {
+          box.style.display = "none";
+        }
+      }
+
+      function previewClaimPhoto(input) {
+        const file = input.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            document.getElementById("claim-preview-img").src = e.target.result;
+            document.getElementById("claim-photo-preview").style.display =
+              "block";
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+
+      function submitClaim() {
+        const appId = document.getElementById("claim-app-id").value;
+        const date = document.getElementById("claim-date").value;
+        const lossDate = document.getElementById("claim-loss-date").value;
+        const cause = document.getElementById("claim-cause").value;
+        const percent = document.getElementById("claim-percent").value;
+        const desc = document.getElementById("claim-description").value.trim();
+
+        if (!appId || !date || !lossDate || !cause || !percent || !desc) {
+          showToast(
+            "Validation Error",
+            "Please fill in all required fields.",
+            "error",
+          );
+          return;
+        }
+
+        simulateLoading(() => {
+          const apps = getApplications();
+          const app = apps.find((a) => a.id === appId);
+          const claims = getClaims();
+          const newClaim = {
+            id: generateId("CLM"),
+            applicationId: appId,
+            userId: user.id,
+            farmerName: app
+              ? app.farmerName
+              : `${user.firstName} ${user.lastName}`,
+            date,
+            dateOfLoss: lossDate,
+            causeOfDamage: cause,
+            percentDamage: percent,
+            description: desc,
+            photoUploaded: !!document.getElementById("claim-photo").files[0],
+            status: "Pending",
+            indemnity: null,
+            submittedAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          };
+          claims.push(newClaim);
+          saveClaims(claims);
+          document.getElementById("claim-success-id").textContent = newClaim.id;
+          openModal("claim-success-modal");
+          clearClaimForm();
+          loadClaims();
+        }, 1000);
+      }
+
+      function clearClaimForm() {
+        document.getElementById("claim-app-id").value = "";
+        document.getElementById("claim-date").value = new Date()
+          .toISOString()
+          .split("T")[0];
+        document.getElementById("claim-loss-date").value = "";
+        document.getElementById("claim-cause").value = "";
+        document.getElementById("claim-percent").value = "";
+        document.getElementById("claim-description").value = "";
+        document.getElementById("claim-photo").value = "";
+        document.getElementById("app-info-box").style.display = "none";
+        document.getElementById("claim-photo-preview").style.display = "none";
+      }
+
+      function loadClaims() {
+        const claims = getClaims().filter((c) => c.userId === user.id);
+        const container = document.getElementById("my-claims-list");
+        const empty = document.getElementById("empty-claims");
+        if (claims.length === 0) {
+          container.innerHTML = "";
+          empty.style.display = "block";
+        } else {
+          empty.style.display = "none";
+          container.innerHTML = claims
+            .map(
+              (c) => `
+            <div style="padding:16px 20px;border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+              <div>
+                <div style="font-weight:700;font-size:14px;color:var(--text-primary)">${c.id}</div>
+                <div style="font-size:12px;color:var(--text-muted)">App: ${c.applicationId}</div>
+                <div style="font-size:12px;color:var(--text-muted)">${c.causeOfDamage} · ${c.percentDamage}% damage</div>
+                <div style="font-size:12px;color:var(--text-muted)">${formatDate(c.date)}</div>
+                ${c.indemnity ? `<div style="font-size:13px;font-weight:600;color:var(--success);margin-top:4px">Indemnity: ${formatCurrency(c.indemnity)}</div>` : ""}
+              </div>
+              <div>${getStatusBadge(c.status)}</div>
+            </div>
+          `,
+            )
+            .join("");
+        }
+      }
+
+      loadAppSelector();
+      loadClaims();
+    </script>
+  </body>
+</html>
