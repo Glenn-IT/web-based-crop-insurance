@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up — LGU Sto. Niño Crop Insurance</title>
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+  </head>
+  <body>
+    <div class="auth-page">
+      <div class="auth-container" style="max-width: 1100px">
+        <div class="auth-left">
+          <div class="auth-logo">🌽</div>
+          <h1>Join the LGU Sto. Niño Crop Insurance Program</h1>
+          <p>
+            Register as a farmer to access insurance coverage, file claims, and
+            protect your livelihood from natural disasters.
+          </p>
+          <ul class="auth-features">
+            <li>
+              <span class="icon">🌾</span> Coverage for flood, drought & pests
+            </li>
+            <li>
+              <span class="icon">💰</span> Financial assistance up to ₱80,000
+            </li>
+            <li><span class="icon">📋</span> Simple online application</li>
+            <li><span class="icon">⚡</span> Fast claim processing</li>
+            <li><span class="icon">🏛️</span> Government-backed protection</li>
+          </ul>
+        </div>
+        <div class="auth-right" style="flex: 1.5">
+          <h2>Create Account</h2>
+          <p class="auth-subtitle">Fill in your details to get started</p>
+
+          <form id="signup-form" onsubmit="handleSignup(event)">
+            <div class="form-row form-row-2">
+              <div class="form-group">
+                <label class="form-label">First Name</label>
+                <input
+                  type="text"
+                  id="fname"
+                  class="form-control"
+                  placeholder="Juan"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input
+                  type="text"
+                  id="lname"
+                  class="form-control"
+                  placeholder="dela Cruz"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                placeholder="juan@example.com"
+                required
+              />
+            </div>
+            <div class="form-row form-row-2">
+              <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  class="form-control"
+                  placeholder="09171234567"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Farmer Category</label>
+                <select id="farmerType" class="form-select" required>
+                  <option value="">Select category</option>
+                  <option>Small Farmer</option>
+                  <option>Commercial Farmer</option>
+                  <option>Agrarian Reform Beneficiary</option>
+                  <option>Fisherfolk</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Home Address</label>
+              <input
+                type="text"
+                id="address"
+                class="form-control"
+                placeholder="Brgy., Municipality, Province"
+                required
+              />
+            </div>
+            <div class="form-row form-row-2">
+              <div class="form-group">
+                <label class="form-label">Password</label>
+                <div class="input-group">
+                  <span class="input-icon">🔒</span>
+                  <input
+                    type="password"
+                    id="password"
+                    class="form-control"
+                    placeholder="Min. 8 characters"
+                    required
+                  />
+                  <span
+                    class="input-icon-right"
+                    onclick="togglePassword('password', this)"
+                    >👁️</span
+                  >
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Confirm Password</label>
+                <div class="input-group">
+                  <span class="input-icon">🔒</span>
+                  <input
+                    type="password"
+                    id="confirm-password"
+                    class="form-control"
+                    placeholder="Repeat password"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-check">
+                <input type="checkbox" id="terms" required />
+                <span style="font-size: 13px; color: var(--text-secondary)"
+                  >I agree to the
+                  <a class="auth-link" href="#">Terms & Conditions</a> and
+                  <a class="auth-link" href="#">Privacy Policy</a></span
+                >
+              </label>
+            </div>
+            <button type="submit" class="btn-primary-auth">
+              Create Account →
+            </button>
+          </form>
+
+          <div class="auth-divider">already have an account?</div>
+          <div style="text-align: center">
+            <a class="auth-link" onclick="navigateTo('../../index.html')"
+              >Sign in here</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="toast-container"></div>
+    <script src="../../data/mockData.js"></script>
+    <script src="../../assets/js/app.js"></script>
+    <script>
+      function handleSignup(e) {
+        e.preventDefault();
+        const password = document.getElementById("password").value;
+        const confirm = document.getElementById("confirm-password").value;
+        if (password !== confirm) {
+          showToast("Error", "Passwords do not match!", "error");
+          return;
+        }
+        if (password.length < 8) {
+          showToast(
+            "Error",
+            "Password must be at least 8 characters.",
+            "error",
+          );
+          return;
+        }
+        simulateLoading(() => {
+          const users = getUsers();
+          const email = document.getElementById("email").value.trim();
+          if (users.find((u) => u.email === email)) {
+            showToast(
+              "Error",
+              "Email already registered. Please login.",
+              "error",
+            );
+            return;
+          }
+          const newUser = {
+            id: "USR-" + Date.now(),
+            firstName: document.getElementById("fname").value.trim(),
+            lastName: document.getElementById("lname").value.trim(),
+            email,
+            password,
+            phone: document.getElementById("phone").value.trim(),
+            address: document.getElementById("address").value.trim(),
+            farmerType: document.getElementById("farmerType").value,
+            avatar: null,
+            createdAt: new Date().toISOString().split("T")[0],
+          };
+          users.push(newUser);
+          saveUsers(users);
+          localStorage.setItem("lgu_current_user", JSON.stringify(newUser));
+          showToast(
+            "Account Created!",
+            "Welcome to the system. Redirecting...",
+            "success",
+          );
+          setTimeout(() => (window.location.href = "dashboard.html"), 1200);
+        }, 900);
+      }
+    </script>
+  </body>
+</html>
