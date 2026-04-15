@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Profile — Crop Insurance</title>
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+  </head>
+  <body>
+    <div class="app-layout">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-logo">🌽</div>
+          <div>
+            <div class="sidebar-title">LGU Sto. Niño</div>
+            <div class="sidebar-subtitle">Crop Insurance System</div>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <div class="nav-section-label">Main</div>
+          <div class="nav-item" onclick="navigateTo('dashboard.html')">
+            <span class="nav-icon">📊</span>Dashboard
+          </div>
+          <div class="nav-section-label">Applications</div>
+          <div class="nav-item" onclick="navigateTo('new-application.html')">
+            <span class="nav-icon">📝</span>New Application
+          </div>
+          <div class="nav-item" onclick="navigateTo('my-applications.html')">
+            <span class="nav-icon">📁</span>My Applications
+          </div>
+          <div class="nav-item" onclick="navigateTo('application-status.html')">
+            <span class="nav-icon">🔍</span>Application Status
+          </div>
+          <div class="nav-section-label">Claims</div>
+          <div class="nav-item" onclick="navigateTo('file-claim.html')">
+            <span class="nav-icon">📩</span>File a Claim
+          </div>
+          <div class="nav-section-label">Account</div>
+          <div class="nav-item active">
+            <span class="nav-icon">👤</span>My Profile
+          </div>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="user-info-sidebar">
+            <div class="user-avatar" id="sidebar-avatar">JD</div>
+            <div>
+              <div class="user-name-sidebar" id="sidebar-name">Loading...</div>
+              <div class="user-role-sidebar">Farmer</div>
+            </div>
+          </div>
+          <button
+            onclick="logout()"
+            style="
+              width: 100%;
+              margin-top: 8px;
+              background: rgba(255, 255, 255, 0.08);
+              border: 1px solid rgba(255, 255, 255, 0.12);
+              color: rgba(255, 255, 255, 0.7);
+              border-radius: 8px;
+              padding: 8px;
+              font-size: 13px;
+              cursor: pointer;
+              font-family: inherit;
+            "
+            onmouseover="this.style.background = 'rgba(220,53,69,0.2)'"
+            onmouseout="this.style.background = 'rgba(255,255,255,0.08)'"
+          >
+            🚪 Sign Out
+          </button>
+        </div>
+      </aside>
+
+      <header class="topbar">
+        <div class="topbar-left">
+          <div>
+            <div class="topbar-title">My Profile</div>
+            <div class="topbar-subtitle">Manage your personal information</div>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              padding: 6px 14px;
+              background: #f8fafc;
+              border-radius: 30px;
+              border: 1px solid var(--border-color);
+            "
+          >
+            <div
+              class="user-avatar"
+              id="topbar-avatar"
+              style="width: 30px; height: 30px; font-size: 12px"
+            >
+              JD
+            </div>
+            <span
+              id="topbar-user-name"
+              style="font-size: 13px; font-weight: 600"
+              >Loading...</span
+            >
+          </div>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <div class="page-header">
+          <div class="page-header-left">
+            <div class="breadcrumb">
+              <span>Home</span><span class="sep">›</span
+              ><span class="current">My Profile</span>
+            </div>
+            <h2>My Profile</h2>
+          </div>
+        </div>
+
+        <div class="grid-2" style="align-items: start">
+          <!-- Profile Card -->
+          <div class="card" style="overflow: hidden">
+            <div class="profile-header">
+              <div
+                class="profile-avatar-large"
+                id="profile-avatar"
+                onclick="
+                  showToast(
+                    'Upload Photo',
+                    'Photo upload feature is for UI demo only.',
+                    'info',
+                  )
+                "
+              >
+                JD
+              </div>
+              <h3
+                id="profile-full-name"
+                style="font-size: 20px; font-weight: 700; margin-bottom: 4px"
+              >
+                Loading...
+              </h3>
+              <p
+                id="profile-farmer-type"
+                style="opacity: 0.8; font-size: 13.5px"
+              >
+                Farmer
+              </p>
+              <div
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 6px;
+                  background: rgba(255, 255, 255, 0.15);
+                  border-radius: 20px;
+                  padding: 6px 14px;
+                  margin-top: 10px;
+                  font-size: 12.5px;
+                "
+              >
+                ✅ Registered Farmer
+              </div>
+            </div>
+            <div class="card-body">
+              <div style="display: flex; flex-direction: column; gap: 12px">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    padding: 10px;
+                    background: #f8fafc;
+                    border-radius: 8px;
+                  "
+                >
+                  <span style="font-size: 20px">📧</span>
+                  <div>
+                    <div
+                      style="
+                        font-size: 11px;
+                        color: var(--text-muted);
+                        font-weight: 600;
+                        text-transform: uppercase;
+                      "
+                    >
+                      Email
+                    </div>
+                    <div
+                      id="profile-email"
+                      style="font-size: 14px; font-weight: 600"
+                    >
+                      —
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    padding: 10px;
+                    background: #f8fafc;
+                    border-radius: 8px;
+                  "
+                >
+                  <span style="font-size: 20px">📱</span>
+                  <div>
+                    <div
+                      style="
+                        font-size: 11px;
+                        color: var(--text-muted);
+                        font-weight: 600;
+                        text-transform: uppercase;
+                      "
+                    >
+                      Phone
+                    </div>
+                    <div
+                      id="profile-phone"
+                      style="font-size: 14px; font-weight: 600"
+                    >
+                      —
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    padding: 10px;
+                    background: #f8fafc;
+                    border-radius: 8px;
+                  "
+                >
+                  <span style="font-size: 20px">📍</span>
+                  <div>
+                    <div
+                      style="
+                        font-size: 11px;
+                        color: var(--text-muted);
+                        font-weight: 600;
+                        text-transform: uppercase;
+                      "
+                    >
+                      Address
+                    </div>
+                    <div
+                      id="profile-address"
+                      style="font-size: 14px; font-weight: 600"
+                    >
+                      —
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    padding: 10px;
+                    background: #f8fafc;
+                    border-radius: 8px;
+                  "
+                >
+                  <span style="font-size: 20px">📅</span>
+                  <div>
+                    <div
+                      style="
+                        font-size: 11px;
+                        color: var(--text-muted);
+                        font-weight: 600;
+                        text-transform: uppercase;
+                      "
+                    >
+                      Member Since
+                    </div>
+                    <div
+                      id="profile-created"
+                      style="font-size: 14px; font-weight: 600"
+                    >
+                      —
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edit Form -->
+          <div>
+            <div class="card" style="margin-bottom: 20px">
+              <div class="card-header"><h5>✏️ Edit Profile</h5></div>
+              <div class="card-body">
+                <div class="form-row form-row-2">
+                  <div class="form-group">
+                    <label class="form-label">First Name</label>
+                    <input type="text" id="edit-fname" class="form-control" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" id="edit-lname" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Email Address</label>
+                  <input type="email" id="edit-email" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Phone Number</label>
+                  <input type="tel" id="edit-phone" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Address</label>
+                  <input type="text" id="edit-address" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Farmer Category</label>
+                  <select id="edit-farmer-type" class="form-select">
+                    <option>Small Farmer</option>
+                    <option>Commercial Farmer</option>
+                    <option>Agrarian Reform Beneficiary</option>
+                    <option>Fisherfolk</option>
+                  </select>
+                </div>
+                <button class="btn btn-primary w-100" onclick="saveProfile()">
+                  💾 Save Profile Changes
+                </button>
+              </div>
+            </div>
+
+            <!-- Change Password -->
+            <div class="card">
+              <div class="card-header"><h5>🔒 Change Password</h5></div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label class="form-label">Current Password</label>
+                  <div class="input-group">
+                    <span class="input-icon">🔒</span>
+                    <input
+                      type="password"
+                      id="current-pass"
+                      class="form-control"
+                      placeholder="Enter current password"
+                    />
+                    <span
+                      class="input-icon-right"
+                      onclick="togglePassword('current-pass', this)"
+                      >👁️</span
+                    >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">New Password</label>
+                  <input
+                    type="password"
+                    id="new-pass"
+                    class="form-control"
+                    placeholder="Min. 8 characters"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Confirm New Password</label>
+                  <input
+                    type="password"
+                    id="confirm-pass"
+                    class="form-control"
+                    placeholder="Repeat new password"
+                  />
+                </div>
+                <button
+                  class="btn btn-outline w-100"
+                  onclick="changePassword()"
+                >
+                  🔑 Update Password
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script src="../../data/mockData.js"></script>
+    <script src="../../assets/js/app.js"></script>
+    <script>
+      let user = requireAuth();
+
+      function loadProfile() {
+        document.getElementById("sidebar-name").textContent =
+          `${user.firstName} ${user.lastName}`;
+        document.getElementById("sidebar-avatar").textContent =
+          user.firstName[0] + user.lastName[0];
+        document.getElementById("topbar-user-name").textContent =
+          `${user.firstName} ${user.lastName}`;
+        document.getElementById("topbar-avatar").textContent =
+          user.firstName[0] + user.lastName[0];
+        document.getElementById("profile-avatar").textContent =
+          user.firstName[0] + user.lastName[0];
+        document.getElementById("profile-full-name").textContent =
+          `${user.firstName} ${user.lastName}`;
+        document.getElementById("profile-farmer-type").textContent =
+          user.farmerType || "Farmer";
+        document.getElementById("profile-email").textContent = user.email;
+        document.getElementById("profile-phone").textContent =
+          user.phone || "—";
+        document.getElementById("profile-address").textContent =
+          user.address || "—";
+        document.getElementById("profile-created").textContent = formatDate(
+          user.createdAt,
+        );
+
+        document.getElementById("edit-fname").value = user.firstName;
+        document.getElementById("edit-lname").value = user.lastName;
+        document.getElementById("edit-email").value = user.email;
+        document.getElementById("edit-phone").value = user.phone || "";
+        document.getElementById("edit-address").value = user.address || "";
+        document.getElementById("edit-farmer-type").value =
+          user.farmerType || "Small Farmer";
+      }
+
+      function saveProfile() {
+        simulateLoading(() => {
+          const users = getUsers();
+          const idx = users.findIndex((u) => u.id === user.id);
+          const updated = {
+            ...user,
+            firstName: document.getElementById("edit-fname").value.trim(),
+            lastName: document.getElementById("edit-lname").value.trim(),
+            email: document.getElementById("edit-email").value.trim(),
+            phone: document.getElementById("edit-phone").value.trim(),
+            address: document.getElementById("edit-address").value.trim(),
+            farmerType: document.getElementById("edit-farmer-type").value,
+          };
+          if (idx !== -1) users[idx] = updated;
+          saveUsers(users);
+          localStorage.setItem("lgu_current_user", JSON.stringify(updated));
+          user = updated;
+          loadProfile();
+          showToast(
+            "Profile Updated",
+            "Your profile changes have been saved.",
+            "success",
+          );
+        }, 700);
+      }
+
+      function changePassword() {
+        const current = document.getElementById("current-pass").value;
+        const newPass = document.getElementById("new-pass").value;
+        const confirm = document.getElementById("confirm-pass").value;
+        if (current !== user.password) {
+          showToast("Error", "Current password is incorrect.", "error");
+          return;
+        }
+        if (newPass.length < 8) {
+          showToast(
+            "Error",
+            "New password must be at least 8 characters.",
+            "error",
+          );
+          return;
+        }
+        if (newPass !== confirm) {
+          showToast("Error", "New passwords do not match.", "error");
+          return;
+        }
+        simulateLoading(() => {
+          const users = getUsers();
+          const idx = users.findIndex((u) => u.id === user.id);
+          if (idx !== -1) {
+            users[idx].password = newPass;
+          }
+          saveUsers(users);
+          user.password = newPass;
+          localStorage.setItem("lgu_current_user", JSON.stringify(user));
+          document.getElementById("current-pass").value = "";
+          document.getElementById("new-pass").value = "";
+          document.getElementById("confirm-pass").value = "";
+          showToast(
+            "Password Changed",
+            "Your password has been updated successfully.",
+            "success",
+          );
+        }, 700);
+      }
+
+      loadProfile();
+    </script>
+  </body>
+</html>
