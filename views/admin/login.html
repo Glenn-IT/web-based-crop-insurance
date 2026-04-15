@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login — LGU Crop Insurance</title>
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+  </head>
+  <body>
+    <div
+      class="auth-page"
+      style="
+        background: linear-gradient(
+          135deg,
+          #1a237e 0%,
+          #283593 40%,
+          #1a6b3c 100%
+        );
+      "
+    >
+      <div class="auth-container">
+        <div
+          class="auth-left"
+          style="background: linear-gradient(160deg, #1a237e, #283593)"
+        >
+          <div class="auth-logo" style="font-size: 36px">🛡️</div>
+          <h1>LGU Sto. Niño<br />Admin Panel</h1>
+          <p>
+            Secure administrative portal for the Agricultural Office. Authorized
+            personnel only.
+          </p>
+          <ul class="auth-features">
+            <li><span class="icon">📊</span>Real-time Analytics Dashboard</li>
+            <li><span class="icon">⚙️</span>Application Management</li>
+            <li><span class="icon">✅</span>Claim Verification</li>
+            <li><span class="icon">📈</span>Generate Reports</li>
+            <li><span class="icon">🔒</span>Secure Access</li>
+          </ul>
+        </div>
+
+        <div class="auth-right">
+          <div style="text-align: center; margin-bottom: 28px">
+            <div
+              style="
+                width: 60px;
+                height: 60px;
+                background: linear-gradient(135deg, #1a237e, #283593);
+                border-radius: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 26px;
+                margin: 0 auto 16px;
+              "
+            >
+              🛡️
+            </div>
+          </div>
+          <h2>Administrator Login</h2>
+          <p class="auth-subtitle">Sign in with your admin credentials</p>
+
+          <form onsubmit="handleAdminLogin(event)">
+            <div class="form-group">
+              <label class="form-label">Admin Email</label>
+              <div class="input-group">
+                <span class="input-icon">📧</span>
+                <input
+                  type="email"
+                  id="admin-email"
+                  class="form-control"
+                  placeholder="admin@lgu-stonino.gov.ph"
+                  value="admin@lgu-stonino.gov.ph"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Password</label>
+              <div class="input-group">
+                <span class="input-icon">🔒</span>
+                <input
+                  type="password"
+                  id="admin-password"
+                  class="form-control"
+                  placeholder="Admin password"
+                  value="admin2024"
+                  required
+                />
+                <span
+                  class="input-icon-right"
+                  onclick="togglePassword('admin-password', this)"
+                  >👁️</span
+                >
+              </div>
+            </div>
+            <button
+              type="submit"
+              class="btn-primary-auth"
+              style="background: linear-gradient(135deg, #1a237e, #283593)"
+            >
+              Sign In as Admin →
+            </button>
+          </form>
+
+          <div
+            style="
+              margin-top: 28px;
+              padding: 14px 18px;
+              background: #f8fafc;
+              border-radius: 10px;
+              border: 1px solid var(--border-color);
+            "
+          >
+            <p
+              style="
+                font-size: 11.5px;
+                font-weight: 700;
+                text-transform: uppercase;
+                color: var(--text-muted);
+                margin-bottom: 6px;
+              "
+            >
+              Demo Credentials
+            </p>
+            <p style="font-size: 12.5px; color: var(--text-secondary)">
+              📧 <code>admin@lgu-stonino.gov.ph</code>
+            </p>
+            <p style="font-size: 12.5px; color: var(--text-secondary)">
+              🔒 <code>admin2024</code>
+            </p>
+          </div>
+
+          <div style="text-align: center; margin-top: 20px">
+            <a
+              class="auth-link"
+              style="font-size: 13px"
+              onclick="navigateTo('../../index.html')"
+              >← Back to Farmer Login</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast-container"></div>
+    <script src="../../data/mockData.js"></script>
+    <script src="../../assets/js/app.js"></script>
+    <script>
+      function handleAdminLogin(e) {
+        e.preventDefault();
+        const email = document.getElementById("admin-email").value.trim();
+        const password = document.getElementById("admin-password").value;
+        simulateLoading(() => {
+          if (
+            email === MOCK_DATA.admin.email &&
+            password === MOCK_DATA.admin.password
+          ) {
+            localStorage.setItem("lgu_admin_logged_in", "true");
+            showToast(
+              "Welcome, Admin!",
+              "Redirecting to dashboard...",
+              "success",
+            );
+            setTimeout(() => (window.location.href = "dashboard.html"), 1000);
+          } else {
+            showToast("Login Failed", "Invalid admin credentials.", "error");
+          }
+        }, 900);
+      }
+    </script>
+  </body>
+</html>
